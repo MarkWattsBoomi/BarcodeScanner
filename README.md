@@ -51,6 +51,8 @@ UPC_E
 
 Ony add the ones you need as the bigger the number the slower scanning will be.
 
+this does them all: - "QR_CODE, CODE_128, CODE_39, UPC_EAN_EXTENSION, EAN_8, EAN_13, CODABAR, CODE_93, AZTEC, DATA_MATRIX, ITF, MAXICODE, PDF_417, RSS_14, RSS_EXPANDED, UPC_A, UPC_E"
+
 ## Outcomes
 
 3 outcomes will be used if defined: -
