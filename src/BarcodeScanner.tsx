@@ -1,6 +1,7 @@
 
 import * as React from 'react';
 import { BarcodeFormat, BrowserMultiFormatReader, DecodeHintType, Result } from '@zxing/library';
+import './BarcodeScanner.css';
 
 declare const manywho: any;
 
@@ -226,17 +227,9 @@ class BarcodeScanner extends React.Component<any,any> {
         this.cameras=[];
         
         for(let deviceId of Object.keys(this.deviceIds)) {
-            let style: React.CSSProperties = {
-                width: "2rem",
-                height: "2rem",
-                backgroundColor: "transparent",
-                border: "none",
-                marginRight: "1rem",
-                fontSize: "2rem"
-
-            };
+            let classes: string = "glyphicon glyphicon-camera bcs-ctl-cambar-cam ";
             if(this.selectedDeviceId === deviceId) {
-                style.color="red"
+                classes += "bcs-ctl-cambar-cam-active"
             }
             
             this.cameras.push(
@@ -246,8 +239,7 @@ class BarcodeScanner extends React.Component<any,any> {
                     onClick={(e: any) => {this.switchCamera(deviceId)}}
                 >
                     <span 
-                        className="glyphicon glyphicon-camera" 
-                        style={style}
+                        className={classes}
                     /> 
                 </div>
             );
@@ -261,6 +253,8 @@ class BarcodeScanner extends React.Component<any,any> {
         let control: any;
         let result: any;
         let message: string = "";
+
+        
 
         const buttons: any = [];
         switch (this.scanStat) {
@@ -281,7 +275,7 @@ class BarcodeScanner extends React.Component<any,any> {
                 message = 'Scanning';
                 buttons.push(
                     <button
-                        className="barcode-scanner-button"
+                        className="bcs-ctl-btnbar-btn"
                         onClick={cancelAction}
                     >
                         {this.cancelLabel}
@@ -293,7 +287,7 @@ class BarcodeScanner extends React.Component<any,any> {
                 message = 'Paused';
                 buttons.push(
                     <button
-                        className="barcode-scanner-button"
+                        className="bcs-ctl-btnbar-btn"
                         onClick={this.startScan}
                     >
                         Re-Scan
@@ -305,7 +299,7 @@ class BarcodeScanner extends React.Component<any,any> {
                     message = 'Code Detected';
                     buttons.push(
                         <button
-                            className="barcode-scanner-button"
+                            className="bcs-ctl-btnbar-btn"
                             onClick={this.startScan}
                         >
                             Re-Scan
@@ -313,7 +307,7 @@ class BarcodeScanner extends React.Component<any,any> {
                     );
                     buttons.push(
                         <button
-                            className="barcode-scanner-button"
+                            className="bcs-ctl-btnbar-btn"
                             onClick={this.acceptResult}
                         >
                             {this.acceptLabel}
@@ -323,114 +317,66 @@ class BarcodeScanner extends React.Component<any,any> {
                     break;
         }
         
-        let offset: string = "4rem"; 
-        if(result?.length > 0) {
-            offset="7rem";
-        }
+        
         control = (
             <div
-                style={{
-                    position: 'absolute',
-                    left: this.video?.clientLeft,
-                    top: this.video?.clientTop,
-                    height: this.video?.clientHeight,
-                    width: this.video?.clientWidth,
-                    zIndex: 1000,
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}
-            >
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexGrow: 0,
-                    backgroundColor: '#000000',
-                    height: "3rem"
-                }}
-            >
-                <span
-                    style={{
-                        margin: 'auto',
-                        fontFamily: 'tahoma',
-                        color: '#fefefe',
-                        fontSize: '1.4rem'
-                    }}
-                >
-                    {message}
-                </span>
-            </div>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    flexGrow: 0,
-                    backgroundColor: '#000000'
-                }}
+                className="bcs-ctl"
             >
                 <div
-                    style={{
-                        margin: 'auto',
-                    }}
+                    className="bcs-ctl-msgbar"
                 >
                     <span
-                        style={{
-                            margin: 'auto',
-                            fontFamily: 'tahoma',
-                            color: '#fefefe',
-                            fontSize: '2rem'
-                        }}
+                        className="bcs-ctl-msgbar-label"
+                    >
+                        {message}
+                    </span>
+                </div>
+                <div
+                    className="bcs-ctl-msgbar"
+                >
+                    <span
+                        className="bcs-ctl-msgbar-label"
                     >
                         {result}
                     </span>
                 </div>
-
-            </div>
                 <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        flexGrow: 1,
-                    }}
+                    className="bcs-ctl-btnbar"
                 >
-                    <div
-                        style={{
-                            margin: 'auto',
-                        }}
-                    >
-                        {buttons}
-                    </div>
-
+                    {buttons}
                 </div>
                 <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        flexGrow: 1,
-                        position: "absolute",
-                        top: offset,
-                        right: 0
-                    }}
+                    className="bcs-ctl-cambar"
                 >
                     {this.cameras}
                 </div>
-
             </div>
         );
 
+        let style: React.CSSProperties = {};
+
+        let classes: string = "treeview " + (this.attributes.has("classes")? this.attributes.has("classes") : "");
+    
+        let model: any = manywho.model.getComponent(this.props.id, this.props.flowKey);
+
+        if(model.isVisible === false) {
+            style.display = "none";
+        }
+        if(model.width) {
+            style.width=model.width + "px"
+        }
+        if(model.height) {
+            style.height=model.height + "px"
+        }
+
         return (
-            <div className="barcode-scanner">
+            <div 
+                className="bcs"
+            >
                 <video 
                     ref={(me: any) => {this.video = me; }} 
-                    className="barcode-scanner-canvas" 
-                    autoPlay={true}
-                    style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: 0,
-                        width: '100%',
-                    }}
-                    
+                    className="bcs-video" 
+                    autoPlay={true}                    
                 />
                 {control}
             </div>

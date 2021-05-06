@@ -1,0 +1,87 @@
+.bcs {
+    position: relative;
+    left: 0;
+    top: 0;
+    right: 0;
+}
+
+
+
+.bcs-video {
+    width: 100%;
+    height: 100%;
+}
+
+.bcs-ctl {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.bcs-ctl-msgbar {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    background-color: #000000;
+}
+
+.bcs-ctl-msgbar-label {
+    margin: auto;
+    font-family: tahoma;
+    color: #fefefe;
+    font-size: 1.4rem;
+}
+
+.bcs-ctl-btnbar {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    margin-top: auto;
+    margin-bottom: 5%;
+    position: relative;
+    margin-left: 3rem;
+}
+
+.bcs-ctl-btnbar-btn {
+    padding: 0.2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1rem !important;
+    background-color: #555;
+    color: #fefefe !important;
+    border: 1px solid #fefefe;
+    border-radius: 1rem;
+    line-height: 2rem !important;
+    margin: auto !important;
+}
+
+.bcs-ctl-cambar {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding-left: 0.6rem;
+    padding-bottom: 0.6rem;
+}
+
+.bcs-ctl-cambar-cam {
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent;
+    border: none;
+    margin-right: 1rem;
+    font-size: 2rem;
+}
+
+.bcs-ctl-cambar-cam-active {
+    color: red;
+}
+
+
